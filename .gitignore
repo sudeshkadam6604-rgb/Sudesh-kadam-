@@ -1,22 +1,70 @@
-### AL ###
-#Template for AL projects for Dynamics 365 Business Central
-#launch.json folder
-.vscode/
-#Cache folder
-.alcache/
-#Symbols folder
-.alpackages/
-#Snapshots folder
-.snapshots/
-#Testing Output folder
-.output/
-#Extension App-file
-*.app
-#Rapid Application Development File
-rad.json
-#Translation Base-file
-*.g.xlf
-#License-file
-*.flf
-#Test results file
-TestResults.xml
+# Simple Online Billing System
+
+products = {
+    '1': {'name': 'Pen', 'price': 10},
+    '2': {'name': 'Notebook', 'price': 50},
+    '3': {'name': 'Eraser', 'price': 5},
+    '4': {'name': 'Pencil', 'price': 8},
+    '5': {'name': 'Bag', 'price': 300}
+}
+
+cart = []
+
+while True:
+    print("\n--- Online Billing System ---")
+    print("1. Show Products")
+    print("2. Add to Cart")
+    print("3. View Cart")
+    print("4. Checkout")
+    print("5. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == '1':
+        print("\nProducts:")
+        for code, item in products.items():
+            print(f"{code}. {item['name']} - Rs.{item['price']}")
+
+    elif choice == '2':
+        code = input("Enter product number: ")
+        if code in products:
+            qty = int(input("Enter quantity: "))
+            cart.append({'code': code, 'qty': qty})
+            print(f"{products[code]['name']} x {qty} added to cart!")
+        else:
+            print("Invalid product number!")
+
+    elif choice == '3':
+        if not cart:
+            print("Cart is empty!")
+        else:
+            total = 0
+            print("\nYour Cart:")
+            for item in cart:
+                p = products[item['code']]
+                amount = p['price'] * item['qty']
+                total += amount
+                print(f"{p['name']} x {item['qty']} = Rs.{amount}")
+            print(f"Total: Rs.{total}")
+
+    elif choice == '4':
+        if not cart:
+            print("Cart is empty!")
+        else:
+            total = 0
+            print("\n--- Checkout ---")
+            for item in cart:
+                p = products[item['code']]
+                amount = p['price'] * item['qty']
+                total += amount
+                print(f"{p['name']} x {item['qty']} = Rs.{amount}")
+            print(f"\nTotal Bill: Rs.{total}")
+            cart.clear()
+            print("Thank you for shopping!")
+
+    elif choice == '5':
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice! Try again.")
